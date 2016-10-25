@@ -36,11 +36,13 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Email
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'popsof0@gmail.com'
-EMAIL_HOST_PASSWORD = 'system3200'
-EMAIL_USE_TLS = True
+email_config = config['email']
+EMAIL_HOST = email_config['EMAIL_HOST']
+EMAIL_PORT = email_config['EMAIL_PORT']
+EMAIL_HOST_USER = email_config['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = email_config['EMAIL_HOST_PASSWORD']
+EMAIL_USE_TLS = email_config['EMAIL_USE_TLS']
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Quick-start development settings - unsuitable for production
@@ -54,8 +56,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-FACEBOOK_APP_ID = '1287907961251791'
-FACEBOOK_SECRET_CODE = 'c48b5bd6b72d0238f5aeda294cb03c2e'
+facebook_config = config['facebook']
+FACEBOOK_APP_ID = facebook_config['FACEBOOK_APP_ID']
+FACEBOOK_SECRET_CODE = facebook_config['FACEBOOK_SECRET_CODE']
 
 # Application definition
 
@@ -151,9 +154,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
