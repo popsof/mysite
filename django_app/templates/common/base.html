@@ -1,0 +1,135 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <title>popsof blog</title>
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="{% url 'post_list' %}" class="navbar-brand">popsof's blog</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+          {% if not user.is_authenticated %}
+          <li>
+            <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+          </li>
+          {% else %}
+          <li><a href="#">{{ user.username }}</a></li>
+          {% endif %}
+          <li>
+            <a href="#">
+              <span class="glyphicon glyphicon-plus"></span>New post
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+          <li>
+            <a href="{% url 'logout' %}">Logout</a>
+          </li>
+          <li>
+            <a href="{% url 'video:bookmark_list' %}">Video</a>
+          </li>
+          <li>
+            <a href="{% url 'video:search' %}">Search</a>
+          </li>
+
+          {% endif %}
+          <li>
+            <a href="{% url 'signup' %}">Signup</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    {% if messages %}
+    <div>
+      {% for message in messages %}
+      <div class="alert
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger
+      {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}alert-info
+      {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success
+      {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}alert-warning
+      {% elif message.level == DEFAULT_MESSAGE_LEVELS.DEBUG %}alert-dander
+      {% endif %}"
+       role="alert">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- <div class="alert alert-success" role="alert">...</div>
+    <div class="alert alert-info" role="alert">...</div>
+    <div class="alert alert-warning" role="alert">...</div>
+    <div class="alert alert-danger" role="alert">...</div> -->
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'post_new' %}" class="top-menu">
+      <span class="glyphicon glyphicon-plus"></span>새글 추가하기
+    </a>
+    {%else %}
+    <div>로그인하세요</div>
+    {% endif %}
+    <h1 class="blog-title"><a href="#">{% block title %}{{ title }}{% endblock %}</a></h1>
+
+    <div>
+      {% block content %}
+      {% endblock %}
+    </div>
+
+  </div>
+{% comment %}
+  <div class="container">
+    <p>Now {% now "DATETIME_FORMAT" %}
+    <table class="table">
+    {% for rec in cities %}
+      <tr class="{% cycle 'row-red' 'row-blue' %}">
+        <td>{{ rec.name }}</td>
+        <td>{{ rec.population }}</td>
+
+        <td>
+          {% ifchanged rec.country %}<strong>{{ rec.country }}</strong>
+          {% else %}{{ rec.country }}
+          {% endifchanged %}
+        </td>
+
+      </tr>
+    {% endfor %}
+    </table>
+
+  {% regroup cities by country as country_list %}
+
+  <table class="table">
+    {% for country in country_list %}
+    <tr><td colspan=2>{{ country.grouper }}</td></tr>
+    {% for city in country.list %}
+    <tr>
+      <td>{{ city.name }}</td>
+      <td>{{ city.population }}</td>
+    </tr>
+    {% endfor %}
+    {% endfor %}
+  </table>
+
+
+
+    {% lorem 3 p %}
+
+    {% for n in num_list %}
+    {% cycle 'row1' 'row2' as currow silent %}
+      <p>{{ currow }} {{ n }}</p>
+    {% endfor %}
+  </div>
+{% endcomment %}
+</body>
+</html>

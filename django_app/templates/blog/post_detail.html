@@ -1,0 +1,33 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="post">
+  {% if post.published_date %}
+  <div class="date">
+    {{ post.published_date }}
+  </div>
+  {% else %}
+  <div>Published Date None</div>
+  {% endif %}
+  <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn_default">
+    <span class="glyphicon glyphicon-pencil"></span>글 수정
+  </a>
+  <h2>{{ post.title }}</h2>
+  <p>{{ post.text|linebreaksbr }}</p>
+</div>
+<div>
+{% for comment in comments %}
+<p>{{ comment.created_date }}</p>
+<p>{{ comment.text }}</p>
+{% endfor %}
+
+</div>
+<div>
+  <form action="{% url 'comment_add' pk=post.pk %}" method="POST">
+    {% csrf_token %}
+    <textarea cols="40" name="text" rows="10" required>
+    </textarea>
+    <button type="submit" class="save btn btn-default">Save</button>
+  </form>
+</div>
+{% endblock content %}

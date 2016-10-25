@@ -1,0 +1,66 @@
+{% extends 'common/base.html' %}
+{% load humanize %}
+{% load app_filters %}
+
+
+{% block content %}
+<div class="container">
+
+<h5>"{{ keyword }}"로 검색 (총{{ result.pageInfo.totalResults|intcomma }}건의 검색결과)</h5>
+<form action="">
+<input type="text" name="q" placeholder={{ keyword }}>
+<button type="submit">검색</button>
+</form>
+
+{% if not result %}
+<p>No Result</p>
+{% else %}
+  <ul>
+    {% for item in result.items %}
+    <li>
+      <p>{{ item.id }}</p>
+      <p>{{ item.snippet.title }}</p>
+      <p>{{ item.snippet.publishedAt|str2date }}</p>
+      <p>{{ item.statistics.viewCount }}</p>
+      <p>{{ item.statistics.likeCount }}</p>
+      <p>{{ item.statistics.dislikeCount }}</p>
+      <p>{{ item.statistics.favoriteCount }}</p>
+      <p>{{ item.statistics.commentCount }}</p>
+
+      <p><img src="{{ item.snippet.thumbnails.medium.url }}"></p>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ item.id }}" frameborder="0" allowfullscreen></iframe>
+
+      {% if item.exist %}
+      <button class="btn btn-warning" disabled="disabled">Already Exist</button>
+      {% else %}
+      <form action="{% url 'video:bookmark_add' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="kind" value="{{ item.kind }}">
+        <input type="text" name="video_id" value="{{ item.id }}">
+        <input type="text" name="title" value="{{ item.snippet.title }}">
+        <input type="text" name="description" value="{{ item.snippet.description }}">
+        <input type="text" name="published_date" value="{{ item.snippet.publishedAt }}">
+        <input type="text" name="thumbnail" value="{{ item.snippet.thumbnails.medium.url }}">
+        <input type="text" name="next" value="{{ request.get_full_path }}">
+        <button class="btn btn-primary" type="submit">Add bookmark</button>
+      </form>
+      {% endif %}
+
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if result.prevPageToken %}
+    <a href="{% url 'video:search' %}?q={{ keyword }}&page_token={{ result.prevPageToken }}" class="btn btn-primary">Prev</a>
+  <a href="{% url 'video:search' %}?q={{ keyword }}" class="btn btn-primary">첫음 페이지</a>
+  {% endif %}
+
+  {% if result.nextPageToken %}
+    <a href="{% url 'video:search' %}?q={{ keyword }}&page_token={{ result.nextPageToken }}" class="btn btn-primary">Next</a>
+  {% endif %}
+
+
+{% endif %}
+
+</div>
+{% endblock %}
