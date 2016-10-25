@@ -2,6 +2,9 @@
 *.sqlite3
 .idea/
 
+# Config folders
+django_app/.conf
+
 # vi swap file
 *.swp
 
