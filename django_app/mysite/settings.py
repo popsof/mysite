@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'blog',
     'member',
     'video',
+    'photo',
 
     'django.contrib.humanize',
 
