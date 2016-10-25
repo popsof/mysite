@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from mysite import views
 
 
@@ -25,4 +27,4 @@ urlpatterns = [
     url(r'^error/$', views.error, name='error'),
     url(r'', include('blog.urls')),
     url(r'^sns/', include('sns.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
