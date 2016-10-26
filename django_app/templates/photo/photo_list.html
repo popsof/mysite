@@ -1,0 +1,16 @@
+{% extends 'common/base.html' %}
+{% block content %}
+<div class="container">
+<h3>{{ title }}</h3>
+{% for photo in photos %}
+<div>
+  <p>{{ photo.title }}</p>
+  <p>{{ photo.desc }}</p>
+  <p>{{ photo.created_date }}</p>
+  <img src="{{ photo.img.url }}">
+</div>
+
+{% endfor %}
+
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 
 {% block content %}
+<div class="container">
 {% for post in post_list %}
 <div>
   <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title|title }}</a></h2>
@@ -9,5 +10,5 @@
   <p>{{ post.published_date|default:"모름" }}</p>
 </div>
 {% endfor %}
-
+</div>
 {% endblock %}

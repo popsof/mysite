@@ -1,0 +1,35 @@
+{% extends 'common/base.html' %}
+{% block content %}
+<div class="container">
+<div>
+  <p>{{ album.title }}</p>
+  <p>{{ album.desc }}</p>
+  <p>{{ album.created_date }}</p>
+</div>
+<div>
+  <form action="{% url 'photo:photo_add' album.pk %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- <input type="text" name="title">
+    <input type="text" name="desc">
+    <input type="file" name="file"> -->
+    {{ form }}
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+
+
+<div>
+  {% for photo in photos %}
+    <p>{{ photo.title }}</p>
+    <p>{{ photo.desc }}</p>
+    <img src="{{ photo.img.url }}">
+    <p>{{ photo.created_date }}</p>
+    <a class="btn{% if photo.like %} disabled{% endif %}" href="{% url 'photo:photo_like' album.id photo.id %}">
+      <span class="glyphicon glyphicon-thumbs-up">좋아요</span>
+    </a>
+    <a class="btn{% if photo.dislike %} disabled{% endif %}" href="{% url 'photo:photo_dislike' album.id photo.id %}">
+      <span class="glyphicon glyphicon-thumbs-down">싫어요</span>
+    </a>
+
+  {% endfor %}
+</div>
+{% endblock %}

@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^error/$', views.error, name='error'),
     url(r'', include('blog.urls')),
     url(r'^sns/', include('sns.urls')),
+    url(r'^photo/', include('photo.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

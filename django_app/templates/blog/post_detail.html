@@ -1,6 +1,8 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
+<div class="container">
+
 <div class="post">
   {% if post.published_date %}
   <div class="date">
@@ -25,9 +27,9 @@
 <div>
   <form action="{% url 'comment_add' pk=post.pk %}" method="POST">
     {% csrf_token %}
-    <textarea cols="40" name="text" rows="10" required>
-    </textarea>
+    <input type="text" name="text" required>
     <button type="submit" class="save btn btn-default">Save</button>
   </form>
+</div>
 </div>
 {% endblock content %}

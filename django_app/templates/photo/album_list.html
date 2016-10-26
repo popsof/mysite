@@ -1,0 +1,28 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="container">
+  <div>
+    <a class="btn" href="{% url 'photo:album_new' %}">
+      <span class="glyphicon glyphicon-plus"></span>새 앨범 만들기
+    </a>
+    <a class="btn" href="{% url 'photo:photo_my' %}">
+      <span class="glyphicon glyphicon-picture"></span>내가 올린 사진모음
+    </a>
+    <a class="btn" href="{% url 'photo:photo_my_like' %}">
+      <span class="glyphicon glyphicon-thumbs-up"></span>내가 좋아하는 사진모음
+    </a>
+    <a class="btn" href="{% url 'photo:photo_my_dislike' %}">
+      <span class="glyphicon glyphicon-thumbs-down"></span>내가 싫어하는 사진모음
+    </a>
+  </div>
+  <div>
+    {% for album in albums %}
+    <p><a href="{% url 'photo:album_detail' album.id %}">{{ album.title }}</a></p>
+    <p>{{ album.owner.nickname }}</p>
+    <p>{{ album.desc }}</p>
+    <p>{{ album.created_date }}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
