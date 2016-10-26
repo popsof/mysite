@@ -11,20 +11,21 @@ __all__ = [
     'login_facebook'
 ]
 
+
 def login( request ):
     next = request.GET.get('next')
 
     if request.method != 'POST':
         return render( request, "member/login.html", {} )
 
-
     try:
         username = request.POST['username']
         password = request.POST['password']
     except KeyError:
-        return HttpResponse( "username or password required!!!")
+        return HttpResponse("username or password required!!!")
 
-    user = auth_auth( username=username, password=password )
+    print(username,password,next)
+    user = auth_auth(username=username, password=password)
 
     if user is not None:
         auth_login( request, user )
