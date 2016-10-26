@@ -36,9 +36,6 @@
             <a href="{% url 'logout' %}">Logout</a>
           </li>
           <li>
-            <a href="{% url 'photo:album_list' %}">Photo</a>
-          </li>
-          <li>
             <a href="{% url 'video:bookmark_list' %}">Video</a>
           </li>
           <li>
@@ -46,6 +43,9 @@
           </li>
 
           {% endif %}
+          <li>
+            <a href="{% url 'photo:album_list' %}">Photo</a>
+          </li>
           <li>
             <a href="{% url 'signup3' %}">Signup</a>
           </li>
